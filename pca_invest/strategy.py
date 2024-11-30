@@ -3,15 +3,15 @@ from pca_helpers import factorReg
 import matplotlib.pyplot as plt
 
 class Strategy():
-    def __init__(self):
+    def __init__(self, pca_components=1):
         self.weights = None
+        self.pca_components = pca_k
 
     def trainWeights(self, train_df):
         """
         Returns weights for an alpha portfolio
         """
-
-        coefs = factorReg(train_df)
+        coefs = factorReg(train_df, n=self.pca_components)
         ordered_alpha = coefs.sort_values(ascending=False, by="PC1")
 
         num_stocks = len(ordered_alpha)
