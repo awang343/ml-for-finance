@@ -1,11 +1,11 @@
 import numpy as np
-from pca_helpers import factorReg
+from .pca_helpers import factorReg
 import matplotlib.pyplot as plt
 
 class Strategy():
     def __init__(self, pca_components=1):
         self.weights = None
-        self.pca_components = pca_k
+        self.pca_components = pca_components
 
     def trainWeights(self, train_df):
         """
