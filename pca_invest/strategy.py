@@ -12,15 +12,17 @@ class Strategy():
         Returns weights for an alpha portfolio
         """
         coefs = factorReg(train_df, n=self.pca_components)
-        ordered_alpha = coefs.sort_values(ascending=False, by="PC1")
+        
 
-        num_stocks = len(ordered_alpha)
-        quintile_num = int(num_stocks / 5)
-
-        top_quintile = ordered_alpha.iloc[:quintile_num].index
-        bottom_quintile = ordered_alpha.iloc[-quintile_num:].index
+     
 
         self.weights = coefs["alpha"] / coefs["alpha"].abs().sum()
+
+        # Market Neutral?
+        total_long = self.weights[self.weights > 0].sum()
+        total_short = self.weights[self.weights < 0].sum()
+        self.weights[self.weights > 0] /= total_long
+        self.weights[self.weights < 0] /= -total_short
 
     def testWeights(self, test_df, plot=True):
         """
