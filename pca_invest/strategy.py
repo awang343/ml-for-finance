@@ -34,25 +34,12 @@ class Strategy():
         market_cumulative = (1 + market_returns).cumprod()
         strat_cumulative = (1 + strat_returns).cumprod()
 
-        if plot:
-            plt.figure(figsize=(12, 6))
-            plt.plot(market_cumulative, label="Market (Equal-Weighted)", linewidth=2)
-            plt.plot(strat_cumulative, label="Market-Neutral Portfolio", linewidth=2)
-
-            plt.title("Cumulative Returns Comparison", fontsize=14)
-            plt.xlabel("Time", fontsize=12)
-            plt.ylabel("Cumulative Returns", fontsize=12)
-            plt.legend()
-            plt.grid(True)
-
-            plt.show()
-
-        return {
+        return (market_returns, strat_returns, {
             "Daily Sharpe": self.sharpe(strat_returns),
             "Annualized Sharpe": self.sharpe(strat_returns, annual=True),
             "Daily Information": self.information(strat_returns, market_returns),
             "Annualized Information": self.information(strat_returns, market_returns, annual=True)
-        }
+        })
 
     def sharpe(self, rets, *, annual=False):
         """
